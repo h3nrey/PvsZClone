@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Peashooter
   m_EditorClassIdentifier: 
   name: Peashooter
-  sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
+  sprite: {fileID: 21300000, guid: fe1fb74b29d7da048a371b285b879aad, type: 3}
   life: 10
   canTakeDamage: 0
   sunCost: 0

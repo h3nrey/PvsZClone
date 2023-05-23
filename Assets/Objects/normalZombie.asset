@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623a3800c49de04e8203e6a6ab6515c, type: 3}
   m_Name: normalZombie
   m_EditorClassIdentifier: 
-  name: 
-  sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  name: zombie
+  sprite: {fileID: 21300000, guid: e075128cf44827543a388a1f1ae88f61, type: 3}
   life: 3
   canTakeDamage: 0
   damage: 0

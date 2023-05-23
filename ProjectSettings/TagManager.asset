@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Cell
-  - 
+  - Plant
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Bg
+    uniqueID: 2513135239
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -33,6 +33,7 @@ public class CreatureBehaviour : MonoBehaviour
 
     public void TakeDamage(int damage) {
         currentLife -= damage;
+        print($"{name} is taking {damage} of damage");
 
         if(currentLife <= 0) {
             Die();
@@ -41,6 +42,7 @@ public class CreatureBehaviour : MonoBehaviour
 
     public void Die() {
         print("die");
+        this.gameObject.SetActive(false);
         //Die Stuffs 
     }
 }

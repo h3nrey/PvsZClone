@@ -7,7 +7,7 @@ public class GridBuilder : MonoBehaviour
 {
     [SerializeField] int cellsX, cellsY;
     [SerializeField] 
-    [Range(1f, 2f)] float offset;
+    [Range(1f, 5f)] float offsetX, offsetY;
     [SerializeField] GameObject cellPrefab;
     [SerializeField] Transform startPoint;
     [SerializeField] Transform cellsHolder;
@@ -22,7 +22,7 @@ public class GridBuilder : MonoBehaviour
         Vector2 startPos = startPoint.position;
         for (int i = 0; i < cellsX; i++) {
             for (int j = 0; j < cellsY; j++) {
-                Vector2 cellPos = new Vector2((startPos.x + (i * offset)), (startPos.y - (j * offset)));
+                Vector2 cellPos = new Vector2((startPos.x + (i * offsetX)), (startPos.y - (j * offsetY)));
                 Instantiate(cellPrefab, cellPos, Quaternion.identity, cellsHolder);
             }
         }
