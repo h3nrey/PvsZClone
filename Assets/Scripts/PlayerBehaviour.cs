@@ -18,16 +18,19 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject currentCell;
 
-    [SerializeField] int currentEnergy;
-
+    [Header("Click")]
+    [SerializeField] LayerMask clicableLayer;
     [SerializeField] Vector2 mousePos;
 
-    [SerializeField] LayerMask plantMask;
+    [SerializeField] int cellLayer;
 
-
+    [SerializeField] int sunLayer;
+    [SerializeField] int sunAmout; // the amount of energy that get on click on sun  
+    [SerializeField] int currentEnergy;
 
     private void Start() {
-        onClick.AddListener(CreatePlant);
+        onClick.AddListener(HandleClick);
+        //onClick.AddListener(CreatePlant);
     }
     public void Click(InputAction.CallbackContext context) {
         if(context.started) {
@@ -37,21 +40,28 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() {
-        CastRay();
+    private void GetSun(GameObject sun) {
+        SunSpawner.instance.sunPool.Release(sun);
+        currentEnergy += sunAmout;
     }
 
-    private void CastRay() {
+    private void FixedUpdate() {
+        //CastRay();
+    }
+
+    private void HandleClick() {
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        RaycastHit2D ray = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, plantMask);
+        RaycastHit2D ray = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, clicableLayer);
 
         if(ray.collider != null) {
-            GameObject cell = ray.collider.gameObject;
-            ray.collider.gameObject.GetComponent<CellBehaviour>().HoverMe();
-            currentCell = cell;
-        }
-        else {
-            currentCell = null;
+            GameObject otherObj = ray.collider.gameObject;
+            
+            if (otherObj.layer == cellLayer) {
+                currentCell = otherObj;
+                CreatePlant();
+            } else if(otherObj.layer == sunLayer) {
+                GetSun(otherObj);
+            }
         }
     }
     private void CreatePlant() {
@@ -65,6 +75,7 @@ public class PlayerBehaviour : MonoBehaviour
                 plant.GetComponent<PlantBehaviour>().AwakePlant(currentPlant);
                 //plant.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
                 currentCell.GetComponent<CellBehaviour>().AddPlant();
+                currentCell = null;
             }
         }
     }
