@@ -7,5 +7,9 @@ using NaughtyAttributes;
 public class Plant : Creature
 {
     public int sunCost;
+    public Projectille projectileData;
+    public float shootCooldown;
+
+    public GameObject projectille;
 
 }

@@ -56,7 +56,7 @@ public class PlayerBehaviour : MonoBehaviour
             if(canPlant) {
                 Vector2 pos = currentCell.transform.position;
                 GameObject plant = Instantiate(currentPlant, pos, Quaternion.identity) as GameObject;
-                plant.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
+                //plant.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
                 currentCell.GetComponent<CellBehaviour>().AddPlant();
             }
         }
