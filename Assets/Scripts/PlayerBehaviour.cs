@@ -9,16 +9,21 @@ public class PlayerBehaviour : MonoBehaviour
     public UnityEvent onClick;
 
     [SerializeField]
-    public GameObject currentPlant;
+    Plant[] allplants;
+    [SerializeField]
+    public Plant currentPlant;   
+    [SerializeField]
+    GameObject plantPrefab;
 
     [SerializeField]
     private GameObject currentCell;
 
-    [SerializeField] List<Vector2> usedPositions;
+    [SerializeField] int currentEnergy;
 
     [SerializeField] Vector2 mousePos;
 
     [SerializeField] LayerMask plantMask;
+
 
 
     private void Start() {
@@ -53,12 +58,19 @@ public class PlayerBehaviour : MonoBehaviour
         if(currentCell != null) {
             bool canPlant = !currentCell.GetComponent<CellBehaviour>().hasPlant;
 
-            if(canPlant) {
+            if(canPlant && currentPlant) {
                 Vector2 pos = currentCell.transform.position;
-                GameObject plant = Instantiate(currentPlant, pos, Quaternion.identity) as GameObject;
+                GameObject plant = Instantiate(plantPrefab, pos, Quaternion.identity) as GameObject;
+                plant.GetComponent<CreatureBehaviour>().GetData(currentPlant);
+                plant.GetComponent<PlantBehaviour>().AwakePlant(currentPlant);
                 //plant.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
                 currentCell.GetComponent<CellBehaviour>().AddPlant();
             }
         }
+    }
+
+    public void SetCurrentPlant(int index) {
+        print($"current plant: {index}");
+        currentPlant = allplants[index];
     }
 }

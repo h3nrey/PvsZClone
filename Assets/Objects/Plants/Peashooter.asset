@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac6847fed12cba24aa3e73b65174088f, type: 3}
+  m_Name: Peashooter
+  m_EditorClassIdentifier: 
+  name: Peashooter
+  sprite: {fileID: 1188774161, guid: 3c90d4929b171e64abb02a6cb7750e35, type: 3}
+  life: 225
+  canTakeDamage: 0
+  sunCost: 0
+  projectileData: {fileID: 11400000, guid: fa629e5c858236d4ca3bb14fb13075cb, type: 2}
+  shootCooldown: 1
+  projectille: {fileID: 865951398345915869, guid: bd3da1e132d91a041a7d8cbc02765be3, type: 3}

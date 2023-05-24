@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c5dadc785b1c743a5854c780846e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 9ca4073ad4689f34eb019d60858140e2, type: 2}
+  data: {fileID: 0}
   currentLife: 0
   sprRenderer: {fileID: 0}
   anim: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ff43e27b1d1e745b1a10f82852b272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 9ca4073ad4689f34eb019d60858140e2, type: 2}
+  data: {fileID: 0}
   shootPoint: {fileID: 8043962139113546247}
 --- !u!212 &7441483313011015490
 SpriteRenderer:

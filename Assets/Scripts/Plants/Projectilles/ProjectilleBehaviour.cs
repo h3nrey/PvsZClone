@@ -6,6 +6,7 @@ public class ProjectilleBehaviour : MonoBehaviour
 {
     [SerializeField] private Projectille data;
 
+    [SerializeField] int zombieLayer = 8;
     private SpriteRenderer sprRenderer;
     private Rigidbody2D rb;
     private bool dataGetted;
@@ -16,7 +17,7 @@ public class ProjectilleBehaviour : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (dataGetted) {
-            if (other.gameObject.layer == data.zombieLayer) {
+            if (other.gameObject.layer == zombieLayer) {
                 ProjectillePoolController.instance.projectillePool.Release(this.gameObject);
                 other.gameObject.GetComponent<CreatureBehaviour>().TakeDamage(data.damage);
             }

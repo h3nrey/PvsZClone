@@ -14,6 +14,11 @@ public class PlantBehaviour : MonoBehaviour
 
     private void Awake() {
         poolInstance = ProjectillePoolController.instance;
+        
+    }
+
+    public void AwakePlant(Plant dataRef) {
+        data = dataRef;
         InvokeRepeating(nameof(Shoot), 0.1f, data.shootCooldown);
     }
     private void Shoot() {

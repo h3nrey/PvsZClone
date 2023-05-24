@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac6847fed12cba24aa3e73b65174088f, type: 3}
-  m_Name: Peashooter
+  m_Name: Snowpea
   m_EditorClassIdentifier: 
-  name: Peashooter
+  name: Snowpea
   sprite: {fileID: 21300000, guid: fe1fb74b29d7da048a371b285b879aad, type: 3}
   life: 300
   canTakeDamage: 0

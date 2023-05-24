@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
 public class CreatureBehaviour : MonoBehaviour
@@ -17,18 +18,16 @@ public class CreatureBehaviour : MonoBehaviour
     [SerializeField]
     private Animator anim;
 
-    private void Awake() {
-        Initialize();
-        GetData();
-        currentLife =  data.life;
-    }
-
+    [Button("Initialize")]
     private void Initialize() {
         sprRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-    }
-    private void GetData() {
+        currentLife = data.life;
         sprRenderer.sprite = data.sprite;
+    }
+    public void GetData(Creature dataRef) {
+        data = dataRef;
+        Initialize();
     }
 
     public void TakeDamage(int damage) {
