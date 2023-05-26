@@ -23,9 +23,22 @@ public class zombieBehaviour : MonoBehaviour
     [SerializeField]
     private Rigidbody2D rb;
 
+    private Animator anim;
+
+    public void LoadData(Zombie dataRef) {
+        data = dataRef;
+    }
+
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
         canMove = true;
+    }
+
+    private void Update() {
+        anim.SetBool("Moving", canMove);
+        anim.SetBool("Eating", hasTarget);
     }
 
     private void FixedUpdate() {
@@ -35,15 +48,25 @@ public class zombieBehaviour : MonoBehaviour
         Attack();
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag(GameTags.house)) {
+            GameManager.game.onZombiesReach?.Invoke();
+        }
+    }
+
+    #region Movement
     private void Move() {
         if (canMove) {
-            rb.velocity = data.speed * Vector2.left * Time.deltaTime;
+            rb.velocity = data.speed * Time.deltaTime * Vector2.left;
         } else {
             rb.velocity = Vector2.zero;
         }
         
     }
+    #endregion
 
+    #region Attack
     private void CheckRange() {
         attackRay = Physics2D.Raycast(transform.position, Vector2.left, attackRange, plantLayer);
 
@@ -64,9 +87,12 @@ public class zombieBehaviour : MonoBehaviour
         }
     }
 
-    //Gizmos
+    #endregion
+
+    #region Gizmos
     private void OnDrawGizmosSelected() {
         Gizmos.color = hasTarget ? Color.blue : Color.red;
         Gizmos.DrawRay(transform.position, attackRange * Vector2.left);
     }
+    #endregion
 }

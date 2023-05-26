@@ -31,7 +31,6 @@ public class ProjectilleBehaviour : MonoBehaviour
     }
     public void GetData(Projectille myData) {
         data = myData;
-        print($"{myData} getted");
         dataGetted = true;
         rb = GetComponent<Rigidbody2D>();
         sprRenderer = GetComponent<SpriteRenderer>();

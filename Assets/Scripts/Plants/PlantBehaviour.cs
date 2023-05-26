@@ -12,11 +12,15 @@ public class PlantBehaviour : MonoBehaviour
 
     [SerializeField] Transform shootPoint;
 
+
     private void Awake() {
         poolInstance = ProjectillePoolController.instance;
         
     }
 
+    private void OnDisable() {
+        CancelInvoke();
+    }
     public void AwakePlant(Plant dataRef) {
         data = dataRef;
         InvokeRepeating(nameof(Shoot), 0.1f, data.shootCooldown);

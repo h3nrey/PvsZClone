@@ -16,7 +16,7 @@ MonoBehaviour:
   sprite: {fileID: 1884448239, guid: fe1fb74b29d7da048a371b285b879aad, type: 3}
   life: 300
   canTakeDamage: 0
-  sunCost: 0
+  sunCost: 75
   projectileData: {fileID: 11400000, guid: e8279f4727fb813478587be132169fa2, type: 2}
   shootCooldown: 2
   projectille: {fileID: 0}

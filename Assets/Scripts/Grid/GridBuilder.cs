@@ -23,7 +23,8 @@ public class GridBuilder : MonoBehaviour
         for (int i = 0; i < cellsX; i++) {
             for (int j = 0; j < cellsY; j++) {
                 Vector2 cellPos = new Vector2((startPos.x + (i * offsetX)), (startPos.y - (j * offsetY)));
-                Instantiate(cellPrefab, cellPos, Quaternion.identity, cellsHolder);
+                GameObject cell = Instantiate(cellPrefab, cellPos, Quaternion.identity, cellsHolder);
+                cell.name = $"cell {i}x{j}";
             }
         }
     }

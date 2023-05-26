@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class CreatureBehaviour : MonoBehaviour
 {
     public Creature data;
@@ -18,10 +19,18 @@ public class CreatureBehaviour : MonoBehaviour
     [SerializeField]
     private Animator anim;
 
+    public UnityEvent onDie;
+
+    private void Start() {
+        onDie.AddListener(Die);
+    }
+
     [Button("Initialize")]
     private void Initialize() {
-        sprRenderer = GetComponent<SpriteRenderer>();
+        sprRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        GetComponent<Animator>().runtimeAnimatorController = data.animController;
+        print("initialize");
         currentLife = data.life;
         sprRenderer.sprite = data.sprite;
     }
@@ -35,7 +44,7 @@ public class CreatureBehaviour : MonoBehaviour
         print($"{name} is taking {damage} of damage");
 
         if(currentLife <= 0) {
-            Die();
+            onDie?.Invoke();
         }
     }
 

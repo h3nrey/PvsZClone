@@ -12,11 +12,12 @@ public class PlayerBehaviour : MonoBehaviour
     Plant[] allplants;
     [SerializeField]
     public Plant currentPlant;   
+
     [SerializeField]
     GameObject plantPrefab;
 
     [SerializeField]
-    private GameObject currentCell;
+    Transform plantHolder;
 
     [Header("Click")]
     [SerializeField] LayerMask clicableLayer;
@@ -57,26 +58,23 @@ public class PlayerBehaviour : MonoBehaviour
             GameObject otherObj = ray.collider.gameObject;
             
             if (otherObj.layer == cellLayer) {
-                currentCell = otherObj;
-                CreatePlant();
+                CreatePlant(otherObj);
             } else if(otherObj.layer == sunLayer) {
                 GetSun(otherObj);
             }
         }
     }
-    private void CreatePlant() {
-        if(currentCell != null) {
-            bool canPlant = !currentCell.GetComponent<CellBehaviour>().hasPlant;
+    private void CreatePlant(GameObject cell) {
+        bool canPlant = !cell.GetComponent<CellBehaviour>().hasPlant;
 
-            if(canPlant && currentPlant) {
-                Vector2 pos = currentCell.transform.position;
-                GameObject plant = Instantiate(plantPrefab, pos, Quaternion.identity) as GameObject;
-                plant.GetComponent<CreatureBehaviour>().GetData(currentPlant);
-                plant.GetComponent<PlantBehaviour>().AwakePlant(currentPlant);
-                //plant.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
-                currentCell.GetComponent<CellBehaviour>().AddPlant();
-                currentCell = null;
-            }
+        if (canPlant && currentPlant && currentEnergy >= currentPlant.sunCost) {
+            Vector2 pos = cell.transform.position;
+            GameObject plant = Instantiate(plantPrefab, pos, Quaternion.identity, plantHolder) as GameObject;
+            plant.GetComponent<CreatureBehaviour>().GetData(currentPlant);
+            plant.GetComponent<PlantBehaviour>().AwakePlant(currentPlant);
+            cell.GetComponent<CellBehaviour>().AddPlant();
+            currentEnergy -= currentPlant.sunCost;
+            plant.GetComponent<CreatureBehaviour>().onDie.AddListener(() => cell.GetComponent<CellBehaviour>().RemovePlant());
         }
     }
 

@@ -17,7 +17,7 @@ public class ProjectillePoolController : MonoBehaviour
     private void Start() {
         projectillePool = new ObjectPool<GameObject>(
             () => {
-                return Instantiate(projectillePrefab);
+                return Instantiate(projectillePrefab, this.transform);
             },
             projectille => {
                 projectille.SetActive(true);
