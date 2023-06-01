@@ -17,9 +17,10 @@ public class CreatureBehaviour : MonoBehaviour
     private SpriteRenderer sprRenderer;
 
     [SerializeField]
-    private Animator anim;
+    Animator anim;
 
     public UnityEvent onDie;
+    public UnityEvent onHurt;
 
     private void Start() {
         onDie.AddListener(Die);
@@ -30,7 +31,6 @@ public class CreatureBehaviour : MonoBehaviour
         sprRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         GetComponent<Animator>().runtimeAnimatorController = data.animController;
-        print("initialize");
         currentLife = data.life;
         sprRenderer.sprite = data.sprite;
     }
@@ -41,7 +41,7 @@ public class CreatureBehaviour : MonoBehaviour
 
     public void TakeDamage(int damage) {
         currentLife -= damage;
-        print($"{name} is taking {damage} of damage");
+        onHurt?.Invoke();
 
         if(currentLife <= 0) {
             onDie?.Invoke();
@@ -52,5 +52,21 @@ public class CreatureBehaviour : MonoBehaviour
         print("die");
         this.gameObject.SetActive(false);
         //Die Stuffs 
+    }
+
+    IEnumerator BlinkEffect(Color[] colors, float durantion = 6f) {
+        Color baseColor = sprRenderer.color;
+
+        for (int i = 0; i < durantion; i++) {
+            foreach (Color color in colors) {
+                sprRenderer.color = color;
+                yield return new WaitForSeconds(0.1f);
+            }
+        } 
+        sprRenderer.color = baseColor;
+    }
+
+    public void StartBlink(Color[] colors, float durantion = 6f) {
+        StartCoroutine(BlinkEffect(colors));
     }
 }

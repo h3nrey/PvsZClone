@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac6847fed12cba24aa3e73b65174088f, type: 3}
-  m_Name: Snowpea
+  m_Name: Sunflower
   m_EditorClassIdentifier: 
-  name: Snowpea
-  sprite: {fileID: 1884448239, guid: fe1fb74b29d7da048a371b285b879aad, type: 3}
-  animController: {fileID: 0}
-  life: 250
+  name: Sunflower
+  sprite: {fileID: -1505554404, guid: 1df4fd9fb159cf249ae76c122c82649b, type: 3}
+  animController: {fileID: 9100000, guid: b2b434896d87ade489539d78659d3150, type: 2}
+  life: 200
   canTakeDamage: 0
-  sunCost: 75
-  isShootable: 1
-  projectileData: {fileID: 11400000, guid: e8279f4727fb813478587be132169fa2, type: 2}
-  shootCooldown: 2
+  sunCost: 50
+  plantCooldown: 0.4
+  isShootable: 0
+  projectileData: {fileID: 0}
+  shootCooldown: 0
+  shootRange: 0
   projectille: {fileID: 0}

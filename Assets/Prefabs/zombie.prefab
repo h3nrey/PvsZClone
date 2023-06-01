@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1183547746, guid: 05af6553425b4b944af469cb5fd063ea, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -161,6 +161,9 @@ MonoBehaviour:
   onDie:
     m_PersistentCalls:
       m_Calls: []
+  onHurt:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8662625656936374893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +185,10 @@ MonoBehaviour:
   attackTime: 0
   hasTarget: 0
   rb: {fileID: 0}
+  crBehaviour: {fileID: 8662625656936374890}
+  hurtColors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  blinkDuration: 1
 --- !u!50 &8662625656936374889
 Rigidbody2D:
   serializedVersion: 4

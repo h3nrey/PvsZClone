@@ -11,15 +11,16 @@ public class ProjectilleBehaviour : MonoBehaviour
     private Rigidbody2D rb;
     private bool dataGetted;
 
-    private void OnBecameInvisible() {
-        ProjectillePoolController.instance.projectillePool.Release(this.gameObject);
+    private void Update() {
+        if(transform.position.x > 15f) {
+            ProjectillePoolController.instance.projectillePool.Release(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (dataGetted) {
             if (other.gameObject.layer == zombieLayer) {
                 ProjectillePoolController.instance.projectillePool.Release(this.gameObject);
-                other.gameObject.GetComponent<CreatureBehaviour>().TakeDamage(data.damage);
             }
         }
     }

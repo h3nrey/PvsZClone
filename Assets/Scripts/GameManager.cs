@@ -2,11 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager game;
     public UnityEvent onZombiesReach;
+
+    [Header("UI")]
+    [SerializeField]
+    TMP_Text sunText;
+
+    [Header("Objects")]
+    [SerializeField]
+    PlayerBehaviour player;
 
     private void Awake() {
         game = this;
@@ -17,6 +26,14 @@ public class GameManager : MonoBehaviour
             print("zombies reached");
             Time.timeScale = 0;
         });
+    }
+
+    private void Update() {
+        UpdateSunText();
+    }
+
+    private void UpdateSunText() {
+        sunText.text = player.currentEnergy.ToString();
     }
 }
 

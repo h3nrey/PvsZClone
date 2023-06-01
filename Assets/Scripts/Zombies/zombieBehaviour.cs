@@ -13,6 +13,7 @@ public class zombieBehaviour : MonoBehaviour
 
     private bool canMove;
 
+    [Header("Attack")]
     [SerializeField] LayerMask plantLayer;
     [SerializeField] float attackRange;
     private RaycastHit2D attackRay;
@@ -20,10 +21,18 @@ public class zombieBehaviour : MonoBehaviour
     [ReadOnly] [SerializeField]private float attackTime;
     [ReadOnly] [SerializeField] bool hasTarget;
 
+    [Header("Components")]
     [SerializeField]
     private Rigidbody2D rb;
-
+    [SerializeField]
+    private CreatureBehaviour crBehaviour;
     private Animator anim;
+
+    [Header("colors")]
+    [SerializeField]
+    Color[] hurtColors;
+    [SerializeField]
+    float blinkDuration;
 
     public void LoadData(Zombie dataRef) {
         data = dataRef;
@@ -32,7 +41,7 @@ public class zombieBehaviour : MonoBehaviour
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        crBehaviour.onHurt.AddListener(() => crBehaviour.StartBlink(hurtColors, blinkDuration));
         canMove = true;
     }
 
@@ -49,11 +58,19 @@ public class zombieBehaviour : MonoBehaviour
 
     }
 
+    #region Collision
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag(GameTags.house)) {
+        GameObject otherObj = other.gameObject;
+
+        if (otherObj.CompareTag(GameTags.house)) {
             GameManager.game.onZombiesReach?.Invoke();
         }
+
+        if(otherObj.CompareTag(GameTags.projectille)) {
+            crBehaviour.TakeDamage(data.damage);
+        }
     }
+    #endregion
 
     #region Movement
     private void Move() {

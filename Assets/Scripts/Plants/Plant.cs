@@ -7,8 +7,11 @@ using NaughtyAttributes;
 public class Plant : Creature
 {
     public int sunCost;
+    public float plantCooldown;
+    public bool isShootable;
     public Projectille projectileData;
     public float shootCooldown;
+    public float shootRange;
 
     public GameObject projectille;
 

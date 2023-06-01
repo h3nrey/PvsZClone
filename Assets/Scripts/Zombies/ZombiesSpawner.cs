@@ -11,6 +11,8 @@ public class ZombiesSpawner : MonoBehaviour
     private GameObject zombiePrefab;
     [SerializeField]
     private Transform[] spawnPoints;
+    [SerializeReference]
+    private float startSpawnCooldown;   
 
     [Header("Waves Manager")]
     [SerializeField]
@@ -40,6 +42,8 @@ public class ZombiesSpawner : MonoBehaviour
     }
 
     IEnumerator HandleWave() {
+        yield return new WaitForSeconds(startSpawnCooldown);
+
         foreach (ZombieWave wave in waves) {
             bool waveFinished = false;
 

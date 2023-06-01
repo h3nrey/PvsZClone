@@ -47,6 +47,7 @@ public class SunSpawner : MonoBehaviour
 
     private void GetSun() {
         GameObject sun = sunPool.Get();
+        sun.GetComponent<SunBehaviour>().isPlantSun = false;
         sun.transform.position = GetRandomSunPos();
     }
 
