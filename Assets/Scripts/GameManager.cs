@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
     private TMP_Text sunText;
 
     [SerializeField]
-    private Image ZWavesDisplayFill;
+    private Slider ZWavesDisplayFill;
 
     [Header("Objects")]
     [SerializeField]
@@ -22,6 +22,17 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField]
     private ZombiesSpawner zSpawner;
+
+    [Header("Zombies Progress Bar")]
+    [SerializeField] private RectTransform progressBarObj;
+
+    [SerializeField]
+    private float currZombieProgress;
+
+    [SerializeField]
+    private float smoothSpeed;
+
+    [SerializeField] private GameObject flagPrefab;
 
     private void Awake() {
         game = this;
@@ -32,17 +43,50 @@ public class GameManager : MonoBehaviour {
             print("zombies reached");
             Time.timeScale = 0;
         });
+
+        SetFlagsPos();
     }
 
     private void Update() {
         UpdateSunText();
         UpdateZWavesDisplay();
+        UpdateZombiePointer();
     }
 
     private void UpdateZWavesDisplay() {
-        float percentage = zSpawner.wavesCurtime / zSpawner.wavesDuration;
-        float percenteClamped = Mathf.Clamp01(percentage);
-        ZWavesDisplayFill.fillAmount = percenteClamped;
+        float total = zSpawner.totalOfZombiesPerPhase;
+        float some = zSpawner.totalOfZombiesCreated;
+
+        if (zSpawner.totalOfZombiesCreated > 0) {
+            float percentage = some / total;
+            float percenteClamped = Mathf.Clamp01(percentage);
+            currZombieProgress = percenteClamped;
+        }
+    }
+
+    private void UpdateZombiePointer() {
+        float curValue = ZWavesDisplayFill.value;
+        ZWavesDisplayFill.value = Mathf.Lerp(curValue, currZombieProgress, smoothSpeed);
+    }
+
+    private void SetFlagsPos() {
+        float total = zSpawner.totalOfZombiesPerPhase;
+        float zombiesAccumulated = 0;
+        float zombiesBarOffset = -200;
+        float yPos = -2.3f;
+
+        for (int i = 0; i < zSpawner.waves.Length - 1; i++) {
+            float waveLength = zSpawner.waves[i].zombiesPool.Length;
+            float zombiesQtd = waveLength + zombiesAccumulated;
+            zombiesAccumulated += waveLength;
+            float percentage = waveLength / total;
+
+            float x = percentage * zombiesBarOffset;
+            Vector2 pos = new Vector2(x - 1, yPos);
+            GameObject flag = Instantiate(flagPrefab, progressBarObj);
+            flag.GetComponent<RectTransform>().anchoredPosition = pos;
+            flag.transform.SetSiblingIndex(progressBarObj.childCount - 2);
+        }
     }
 
     private void UpdateSunText() {

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using NaughtyAttributes;
+using UnityEngine.Events;
 
 public class ZombiesSpawner : MonoBehaviour {
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent onFinalWave;
 
     [Header("Static stuff")]
     [SerializeField]
@@ -16,13 +20,14 @@ public class ZombiesSpawner : MonoBehaviour {
     [SerializeReference]
     private float startSpawnCooldown;
 
+    public int totalOfZombiesPerPhase;
+    public int totalOfZombiesCreated;
+
     [Header("Waves Manager")]
     [SerializeField]
-    [OnValueChanged(nameof(SetWavesDuration))]
-    private ZombieWave[] waves;
+    public ZombieWave[] waves;
 
-    [SerializeField]
-    private List<GameObject> zombiesPool;
+    public List<GameObject> zombiesPool;
 
     [SerializeField]
     [ReadOnly]
@@ -53,7 +58,6 @@ public class ZombiesSpawner : MonoBehaviour {
 
     [ReadOnly] public float currentSpawnCooldown;
     [ReadOnly] public bool canSpawn;
-    [ReadOnly] public float realTime;
 
     private void SetWavesDuration() {
         wavesDuration = 0;
@@ -70,7 +74,6 @@ public class ZombiesSpawner : MonoBehaviour {
     }
 
     private void Update() {
-        realTime = Time.time;
         EnableZombie();
         CheckZombiesWaveState();
     }
@@ -83,6 +86,7 @@ public class ZombiesSpawner : MonoBehaviour {
             zombiesPool.Remove(curZombie);
             activeZombies.Add(curZombie);
             waveZombiesCreated++;
+            totalOfZombiesCreated++;
 
             float cooldown = spawnCooldownPool[0];
             spawnCooldownPool.RemoveAt(0);
@@ -94,6 +98,7 @@ public class ZombiesSpawner : MonoBehaviour {
         }
     }
 
+    //Check if all the instantiated zombies of the current zombies has been died
     private void CheckZombiesWaveState() {
         if (activeZombies.Count > 0) return;
 
@@ -102,6 +107,10 @@ public class ZombiesSpawner : MonoBehaviour {
             canSpawn = true;
             currentSpawnCooldown = Time.time + currentWave.nextWaveCooldown;
             currentWaveIndex += 1;
+
+            if (currentWaveIndex == waves.Length - 1) {
+                onFinalWave?.Invoke();
+            }
         }
     }
 
@@ -112,6 +121,7 @@ public class ZombiesSpawner : MonoBehaviour {
                 GameObject zombie = CreateZombie(group);
                 zombie.SetActive(false);
                 zombiesPool.Add(zombie);
+                totalOfZombiesPerPhase++;
             }
         }
     }
