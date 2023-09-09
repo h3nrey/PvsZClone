@@ -49,7 +49,6 @@ public class SunBehaviour : MonoBehaviour
 
 
     public void Launch(Vector2 plantPos) {
-        print($"Start Launch {plantPos}");
         canLaunch = true;
 
         transform.position = plantPos;

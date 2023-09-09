@@ -4,13 +4,14 @@ using UnityEngine;
 using NaughtyAttributes;
 
 [System.Serializable]
-public class ZombieWave
-{
+public class ZombieWave {
     public ZombieGroup[] zombiesPool;
+    public float nextWaveCooldown;
 }
 
 [System.Serializable]
 public class ZombieGroup {
+
     public enum spawnPoints {
         first,
         second,
@@ -21,6 +22,7 @@ public class ZombieGroup {
 
     [EnumFlags]
     public spawnPoints spawnPoint;
+
     public float nextCooldown;
     public Zombie zombieData;
 }

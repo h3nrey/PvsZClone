@@ -18,7 +18,7 @@ MonoBehaviour:
   life: 600
   canTakeDamage: 0
   damage: 50
-  speed: 30.45
+  speed: 20
   hasShield: 0
   shieldSprite: {fileID: 0}
   shieldLife: 0
